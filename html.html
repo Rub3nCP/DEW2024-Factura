@@ -1,71 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Factura</h1>
-
-    <div class="container">
-        <label for="concept">Concepto</label>
-        <select id="concept">
-            <option value="Ginebra Xpress">Ginebra Xpress</option>
-            <option value="Otro Producto">Otro Producto</option>
-        </select><br>
-
-        <label for="quantity">Cantidad</label>
-        <input type="number" id="quantity" value="1" min="1"><br>
-
-        <label for="price">Precio</label>
-        <input type="number" id="price" value="4.10" step="0.01" min="0">€<br>
-
-        <button onclick="addItem()">Insertar</button>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Concepto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Precio Total</th>
-                </tr>
-            </thead>
-            <tbody id="invoice-body"></tbody>
-            <tfoot>
-                <!-- subtotal -->
-                <tr class="result">
-                    <td colspan="2" style="border: none;"></td>
-                    <td>Subtotal:</td>
-                    <td id="subtotal">0.00€</td>
-                </tr>
-
-                <!-- Fila para impuestos, tasa y porcentaje -->
-                <tr class="result">
-                    <td style="text-align: right;">Tasa:</td>
-                    <td id="selected-tax" style="color: red; text-align: center;">0%</td>
-                    <td>Impuestos:</td>
-                    <td id="taxes">0.00€</td>
-                </tr>
-
-                <!-- Fila para el total -->
-                <tr class="result">
-                    <td colspan="3" style="text-align: right;"><strong>TOTAL:</strong></td>
-                    <td id="total">0.00€</td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <div class="tax-buttons">
-            <button onclick="setTax(5)">Tasa 5%</button>
-            <button onclick="setTax(15)">Tasa 15%</button>
-            <button onclick="setTax(30)">Tasa 30%</button>
-        </div>
-        <button onclick="calculateTotal()">Calcular</button>
+    <form id="formulario">
+        <label for="concepto">Concepto</label>
+        <input type="text" id="concepto" required>
+        <br><br>
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" required>
+        <br><br>
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" step="0.01" required> €
+        <br><br>
+        <button type="button" onclick="insertarProducto()">Insertar</button>
+        </form>
+    <table id="tablaProductos">
+    <thead>
+        <tr>
+            <th>Concepto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Subtotal:</td>
+            <td id="subtotal" colspan="1">0.00€</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="1">Tasa:</td>
+            <td id="tasa" colspan="1" style="color: red; font-weight: bold;">30%</td>
+            <td colspan="1">Impuestos:</td>
+            <td id="impuestos" colspan="1">0.00€</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3">TOTAL:</td>
+            <td id="total" colspan="1">0.00€</td>
+            <td></td>
+        </tr>
+    </tfoot>
+    </table><br>
+    <div>
+    <button onclick="cambiarTasa(0.05)">Tasa 5%</button>
+    <button onclick="cambiarTasa(0.15)">Tasa 15%</button>
+    <button onclick="cambiarTasa(0.30)">Tasa 30%</button><br><br>
+    <button onclick="actualizarTotales()">Calcular</button>
     </div>
-
     <script src="bill.js"></script>
 </body>
 </html>

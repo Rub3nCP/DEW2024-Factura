@@ -1,61 +1,69 @@
+let tasa = 0.3;
 let subtotal = 0;
-let taxRate = 0; 
 
-function addItem() {
-    // Obtener los valores de los inputs
-    const concept = document.getElementById("concept").value;
-    const quantity = parseFloat(document.getElementById("quantity").value);
-    const price = parseFloat(document.getElementById("price").value);
+function insertarProducto() {
+    const concepto = document.querySelector("#concepto").value;
+    const cantidad = parseInt(document.querySelector("#cantidad").value);
+    const precio = parseFloat(document.querySelector("#precio").value);
 
-    // Validar que todos los campos estén completos y sean números válidos
-    if (!concept || isNaN(quantity) || isNaN(price)) {
-        alert("Please enter valid values for all fields.");
-        return;
+if (concepto && cantidad > 0 && precio > 0) {
+    const precioTotal = cantidad * precio;
+    subtotal += precioTotal;
+
+    const fila = document.createElement("tr");
+
+    const celdaConcepto = document.createElement("td");
+    celdaConcepto.textContent = concepto;
+    fila.appendChild(celdaConcepto);
+
+    const celdaCantidad = document.createElement("td");
+    celdaCantidad.textContent = cantidad;
+    fila.appendChild(celdaCantidad);
+
+    const celdaPrecioUnitario = document.createElement("td");
+    celdaPrecioUnitario.textContent = precio.toFixed(2) + "€";
+    fila.appendChild(celdaPrecioUnitario);
+
+    const celdaPrecioTotal = document.createElement("td");
+    celdaPrecioTotal.textContent = precioTotal.toFixed(2) + "€";
+    fila.appendChild(celdaPrecioTotal);
+
+    const celdaEliminar = document.createElement("td");
+    const xEliminar = document.createElement("span");
+    xEliminar.textContent = "X"; 
+    xEliminar.onclick = function () { eliminarFila(fila, precioTotal); };
+    celdaEliminar.appendChild(xEliminar);
+    fila.appendChild(celdaEliminar);
+
+    document.querySelector("#tablaProductos tbody").appendChild(fila);
+
+    actualizarTotales();
+
+    document.querySelector("#concepto").value = "";
+    document.querySelector("#cantidad").value = "";
+    document.querySelector("#precio").value = "";
+    } else {
+    alert("Por favor, completa todos los campos correctamente.");
     }
-
-    // Calcular el precio total para este producto
-    const total = quantity * price;
-
-    // Agregar el producto a la tabla
-    const tableBody = document.getElementById("invoice-body");
-    const row = document.createElement("tr");
-
-    // Agregar la clase de fondo azul a la nueva fila
-    row.classList.add("blue-row");
-
-    row.innerHTML = `
-        <td>${concept}</td>
-        <td>${quantity}</td>
-        <td>${price.toFixed(2)}€</td>
-        <td>${total.toFixed(2)}€</td>
-    `;
-
-    tableBody.appendChild(row);
-
-    // Actualizar el subtotal
-    subtotal += total;
-    document.getElementById("subtotal").textContent = subtotal.toFixed(2) + "€";
-
-    // Limpiar los campos de entrada
-    document.getElementById("concept").value = "";
-    document.getElementById("quantity").value = "";
-    document.getElementById("price").value = "";
 }
 
-// Función para establecer la tasa de impuestos
-function setTax(rate) {
-    taxRate = rate;
-    // Actualizar el porcentaje de impuestos en la columna "Cantidad" donde está el 0%
-    document.getElementById("selected-tax").textContent = `${taxRate}%`;
+function eliminarFila(fila, precioTotal) {
+    subtotal -= precioTotal;
+    fila.remove();
+    actualizarTotales();
 }
 
-// Función para calcular el total final con impuestos
-function calculateTotal() {
-    // Calcular los impuestos
-    const taxes = subtotal * (taxRate / 100);
-    const total = subtotal + taxes;
+function cambiarTasa(nuevaTasa) {
+    tasa = nuevaTasa;
+  document.querySelector("#tasa").textContent = (tasa * 100).toFixed(0) + "%";
+    actualizarTotales();
+}
 
-    // Mostrar los impuestos y el total
-    document.getElementById("taxes").textContent = taxes.toFixed(2) + "€";
-    document.getElementById("total").textContent = total.toFixed(2) + "€";
+function actualizarTotales() {
+    const impuestos = subtotal * tasa;
+    const total = subtotal + impuestos;
+
+    document.querySelector("#subtotal").textContent = subtotal.toFixed(2) + "€";
+    document.querySelector("#impuestos").textContent = impuestos.toFixed(2) + "€";
+    document.querySelector("#total").textContent = total.toFixed(2) + "€";
 }
