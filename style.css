@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #000080;
+}
+
+.container {
+    width: 60%;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #000080;
+    text-align: center;
+}
+
+th, td {
+    padding: 8px;
+}
+
+
+th {
+    background-color: #000080;
+    color: white;
+}
+
+.blue-row {
+    background-color: #d8e2f3;
+    color: black;
+}
+
+.result {
+    background-color: #d8e2f3;
+}
+
+.tax-buttons {
+    margin: 10px 0;
+}
