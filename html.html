@@ -14,7 +14,6 @@
         <select id="concept">
             <option value="Ginebra Xpress">Ginebra Xpress</option>
             <option value="Otro Producto">Otro Producto</option>
-            <!-- Añade más opciones si es necesario -->
         </select><br>
 
         <label for="quantity">Cantidad</label>
@@ -36,20 +35,22 @@
             </thead>
             <tbody id="invoice-body"></tbody>
             <tfoot>
-                <!-- Fila para subtotal -->
+                <!-- subtotal -->
                 <tr class="result">
                     <td colspan="2" style="border: none;"></td>
                     <td>Subtotal:</td>
                     <td id="subtotal">0.00€</td>
                 </tr>
-                <!-- Fila para impuestos, tasa y porcentaje al mismo nivel -->
+
+                <!-- Fila para impuestos, tasa y porcentaje -->
                 <tr class="result">
                     <td style="text-align: right;">Tasa:</td>
                     <td id="selected-tax" style="color: red; text-align: center;">0%</td>
                     <td>Impuestos:</td>
                     <td id="taxes">0.00€</td>
                 </tr>
-                <!-- Fila para el total abarcando toda la fila -->
+
+                <!-- Fila para el total -->
                 <tr class="result">
                     <td colspan="3" style="text-align: right;"><strong>TOTAL:</strong></td>
                     <td id="total">0.00€</td>
@@ -57,7 +58,6 @@
             </tfoot>
         </table>
 
-        <!-- Botones para seleccionar la tasa de impuestos -->
         <div class="tax-buttons">
             <button onclick="setTax(5)">Tasa 5%</button>
             <button onclick="setTax(15)">Tasa 15%</button>
@@ -66,7 +66,6 @@
         <button onclick="calculateTotal()">Calcular</button>
     </div>
 
-    <!-- Enlace al archivo JavaScript externo -->
     <script src="bill.js"></script>
 </body>
 </html>
